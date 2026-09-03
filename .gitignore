@@ -1,0 +1,8 @@
+bin/
+obj/
+app.db
+app.db-shm
+app.db-wal
+client/node_modules/
+client/dist/
+D:/temp/
