@@ -1,0 +1,3 @@
+namespace Core.Entities;
+public class Order { public int Id { get; set; } public string BuyerEmail { get; set; } = ""; public string BuyerRole { get; set; } = ""; public decimal Total { get; set; } public string Status { get; set; } = "Pending"; public DateTime OrderDate { get; set; } = DateTime.UtcNow; public List<OrderItem> Items { get; set; } = new(); }
+public class OrderItem { public int Id { get; set; } public int OrderId { get; set; } public string ProductName { get; set; } = ""; public decimal Price { get; set; } public int Quantity { get; set; } }
