@@ -1,43 +1,172 @@
-# 🛍️ ComWebP.SHOP — Full-Stack E-Commerce Platform | .NET 8 + React + SQLite
+# ComWebP.SHOP - Modern E-Commerce Platform
 
-> A complete, production-ready, attractive e-commerce platform built on D: Drive. FakeStoreAPI + Local SQLite DB + Role-Based Auth + Cart + Buying History. Built by SayakaMeem.
+![Vite](https://img.shields.io/badge/Vite-v8.2.2-646CFF?logo=vite)
+![React](https://img.shields.io/badge/React-18-61DAFB?logo=react)
+![Tailwind](https://img.shields.io/badge/Tailwind-3.4.10-38BDF8?logo=tailwindcss)
+![Status](https://img.shields.io/badge/Status-Live-success)
 
-**Live Frontend:** http://localhost:5174 | **Backend API:** http://localhost:5000 | **Swagger:** http://localhost:5000/swagger | **GitHub:** https://github.com/SayakaMeem/ComWebP
+A fully responsive, bug-free e-commerce shop with dark/light theme, role-based auth, cart, orders and admin dashboard.
 
-### OVERVIEW
-ComWebP.SHOP is a modern full-stack e-commerce web app. It solves the problem of expensive image hosting by using free FakeStoreAPI for product images, and also allows admin to add real products to local SQLite database D:/app.db. The UI has Summer Mega Sale 70% OFF hero, search bar, category filters, best seller badges, free delivery/COD/returns strip, and fully working cart and purchase history. The project is built 100% on D: drive because C: drive had low space, using TEMP=D:\temp trick.
+### 🚀 Live Links
 
-### FEATURES — ALL IN ONE
-1. Attractive UI: Dark header ComWebP.SHOP logo, search input (Search iPhone, jacket, saree, watch...), purple-pink hero gradient, Shop Collection button, 4.8/5 rated badge.
-2. Product System: Combines FakeStoreAPI products and Local DB products (local shows as "Local DB" and "BEST SELLER"). Image, title, category, rating, price, stock.
-3. Search & Filter: Real-time search, category filters All, Local, Men's Clothing, Jewelery, Electronics, Women's Clothing.
-4. Authentication with Roles: Single modal for Login/Register. Register allows choosing Customer or Admin role. Login checks from localStorage users list. Session saved in localStorage cwp_user. Default admin is admin@comwebp.shop / admin123. Customer can register with any email.
-5. Admin Power: Only admin sees Admin Panel "Manage D:/ app.db". Admin can Add product (name, price, stock, description) via POST to /api/products, Edit local product via PUT, Delete via DELETE. Admin cannot edit FakeStore products. Admin sees purchaser list.
-6. Cart System: Add to Cart, quantity increase, remove, cart drawer slide, total calculation, cart count in header, data saved in localStorage cart.
-7. Purchase & History: Confirm Purchase creates order object {id, user email, role, items, total, date}. Orders saved in localStorage cwp_orders. Customer clicks My Orders to see own buying history. Admin clicks All Orders to see all purchaser orders with buyer email, total, items list, timestamp.
-8. Security: Public cannot see admin panel, cannot add product, cannot checkout without login — forces login modal.
+| Environment | URL |
+|---|---|
+| **Production (Main)** | **https://comwebp-shop-new.vercel.app** |
+| Preview Build | https://comwebp-shop-5b5mffts7-sayakameems-projects.vercel.app |
+| Local Dev | http://localhost:5175 |
 
-### TECH STACK — SINGLE LIST
-Backend: .NET 8 Web API, C#, Entity Framework Core 8, SQLite, Swagger/OpenAPI, CORS enabled. Frontend: React 18, Vite, JSX, Modern CSS, LocalStorage for auth/cart/orders. Database: SQLite file app.db at D:/GitProjects/ComWebP/app.db and D:/app.db. External API: https://fakestoreapi.com/products for free product data. Tools: D:\dotnet SDK, D:\dotnet-tools, D:\temp for TEMP/TMP, npm, Git, VS Code.
+### ✨ Features
 
-### ARCHITECTURE
-Browser (React Vite 5174) -> Fetch FakeStoreAPI + Fetch Local API http://localhost:5000/api/products -> .NET API -> EF Core -> SQLite app.db. Auth and orders handled 100% on frontend localStorage for fast demo, no JWT needed for this version. CORS allows 5174 to talk to 5000.
+- ✅ Mobile-first responsive (1 col <400px, 2 col tablet, 4 col desktop)
+- ✅ Light / Dark theme with `data-theme` and `localStorage`
+- ✅ Hamburger ☰ menu - works on phone touch
+- ✅ Customer / Admin role switch in Register modal
+- ✅ Add to Cart, Buy Now, My Orders / All Orders
+- ✅ Admin Dashboard - Add / Edit / Delete local products
+- ✅ Search + Category filter
+- ✅ No GPU glitch - stable solid colors (no backdrop-blur)
+- ✅ Free Delivery banner + COD
 
-### PROJECT STRUCTURE — SINGLE VIEW
-ComWebP/ -> src/API/Program.cs, Controllers/ProductsController.cs, Core/Entities/Product.cs, Infrastructure/AppDbContext.cs, app.db, client/src/App.jsx (contains all UI + auth + cart + orders logic), client/src/App.css (header, hero, filters, grid, card, cart-drawer, admin, modal-bg, modal, role-chip, order-card), client/package.json, .gitignore, README.md (this file).
+### 🛠 Tech Stack
 
-### HOW TO RUN — COMPLETE STEPS IN ONE PLACE — D: DRIVE ONLY
-Prerequisites: Create folder D:\temp, install .NET 8 SDK to D:\dotnet, Node.js installed, repo cloned to D:\GitProjects\ComWebP.
-Step 1 Backend: Open CMD, run set TEMP=D:\temp & set TMP=D:\temp & set PATH=D:\dotnet;D:\dotnet-tools;%PATH% then cd /d D:\GitProjects\ComWebP then dotnet run --project src\API --urls http://localhost:5000. You should see Now listening on http://localhost:5000 and Swagger.
-Step 2 Frontend: Open second CMD, run set TEMP=D:\temp & set TMP=D:\temp then cd /d D:\GitProjects\ComWebP\client then npm install (first time) then npm run dev -- --port 5174. You should see Vite ready at http://localhost:5174.
-Step 3 Open Chrome http://localhost:5174. Test register as customer test@gmail.com / 1234 / Customer -> Add to cart -> Confirm Purchase -> My Orders -> See history. Logout. Login as admin@comwebp.shop / admin123 -> See admin panel -> Add iPhone 16 price 1500 stock 5 -> Edit to 1400 -> Delete -> Click All Orders to see purchaser list.
+| Layer | Technology | Version |
+|---|---|---|
+| Frontend | React + Vite | 18 / 8.2.2 |
+| Styling | Tailwind CSS + Custom CSS Tokens | 3.4.10 |
+| State | useState + localStorage | - |
+| Deployment | Vercel CLI | Latest |
+| API | FakeStoreAPI + Custom API | - |
+| Icons | Emoji + Custom Chip UI | - |
 
-### DEFAULT ACCOUNTS
-Admin: admin@comwebp.shop / admin123 (can Add/Edit/Delete + view all orders). Customer: Create via Register -> Role Customer (can only shop + view own orders). No Angular used in this project, only React.
+### 🔐 User Roles
 
-### API ENDPOINTS
-GET http://localhost:5000/api/products - get local products. POST http://localhost:5000/api/products body {name, description, price, stock, imageUrl} - add. PUT http://localhost:5000/api/products/{id} - update. DELETE http://localhost:5000/api/products/{id} - delete. External: GET https://fakestoreapi.com/products - free products.
+| Role | Email | Password | Access |
+|---|---|---|---|
+| **Admin** | `admin@comwebp.shop` | `admin123` | Add/Edit/Delete products, View All Orders |
+| Customer | Register any email | Your password | Add to Cart, Buy, View My Orders |
 
-### DATABASE
-SQLite file app.db. Table Products: Id, Name, Description, Price, Stock, ImageUrl. EF Core auto migrates. Location D:/app.db and D:/GitProjects/ComWebP/app.db.
+> All users stored in `localStorage: cwp_users`. First time on new device, only admin exists.
+
+### 🏗 Architecture & Flowchart
+
+```mermaid
+flowchart TD
+    A[User Opens comwebp-shop-new.vercel.app] --> B{Logged In?}
+    B -- No --> C[Show Login / Register Modal]
+    C --> D{Select Role: Customer / Admin}
+    D --> E[Save to localStorage cwp_users]
+    B -- Yes --> F[Load Products]
+    F --> G[FakeStoreAPI + /api/products]
+    G --> H[Filter by Search + Category]
+    H --> I[Display Grid]
+    I --> J{Action}
+    J -- Add to Cart --> K[Cart Drawer 92vw on Mobile]
+    J -- Admin --> L[Admin Dashboard]
+    L --> M[POST / PUT / DELETE local product]
+    K --> N[Buy Now]
+    N --> O[Create Order in cwp_orders]
+    O --> P[Show My Orders / All Orders Drawer]
+    P --> Q[Theme Toggle 🌙/☀️ -> data-theme -> localStorage]
+
+
+📂 Folder Structure
+ComWebP/
+├── client/
+│   ├── src/
+│   │   ├── App.jsx      # Complete shop - cart, auth, admin, orders
+│   │   ├── main.jsx     # React root + index.css import
+│   │   └── index.css    # Tokens: --bg #fff / #16171d, --accent #aa3bff
+│   ├── index.html
+│   ├── tailwind.config.js
+│   ├── postcss.config.js
+│   └── package.json
+├── .gitignore
+└── README.md
+
+
+💻 Installation & Run Commands
+
+# 1. Clone
+git clone https://github.com/your-username/ComWebP.git
+cd ComWebP/client
+
+# 2. Install
+npm install
+
+# 3. Open files
+notepad src\App.jsx
+notepad src\index.css
+
+# 4. Run locally (host for phone testing)
+npm run dev -- --host
+# Open http://localhost:5175
+
+# 5. Build for production
+npm run build
+
+# 6. Deploy to Vercel
+vercel --prod --yes
+
+🔧 Environment Variables
+Create client/.env:
+
+Code
+VITE_API_URL=http://localhost:5000
+
+📦 API Routes
+Method
+
+Endpoint
+
+Description
+
+GET
+
+/api/products
+
+Get all local products
+
+POST
+
+/api/products
+
+Add product (Admin)
+
+PUT
+
+/api/products/:id
+
+Update product
+
+DELETE
+
+/api/products/:id
+
+Delete product
+
+GET
+
+https://fakestoreapi.com/products
+
+External products
+
+
+🎨 Design Tokens
+
+Token	Light	Dark
+--bg	#fff	#16171d
+--text-h	#08060d	#f3f4f6
+--text	#6b6375	#9ca3af
+--border	#e5e4e7	#2e303a
+--code-bg	#f4f3ec	#1f2028
+--accent	#aa3bff	#c084fc
+
+
+🚢 Deployment
+Push to main → Vercel auto-deploys if connected to GitHub
+Or manual: vercel --prod --yes
+
+
+
+
 
