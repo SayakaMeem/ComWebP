@@ -1,8 +1,10 @@
 bin/
 obj/
-app.db
-app.db-shm
-app.db-wal
+.vs/
+out/
+node_modules/
 client/node_modules/
 client/dist/
-D:/temp/
+dist/
+.env
+.env.local

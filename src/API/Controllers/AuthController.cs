@@ -1,15 +1,10 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers;
 [ApiController, Route("api/[controller]")]
 public class AuthController : ControllerBase
 {
-    [HttpPost("login")] public IActionResult Login([FromBody] LoginRequest req)
-    {
-        if(req.Email=="admin@comwebp.shop" && req.Password=="admin123")
-            return Ok(new { email=req.Email, role="Admin", token="fake-jwt-admin" });
-        return Ok(new { email=req.Email, role="Customer", token="fake-jwt-customer" });
-    }
-    [HttpPost("register")] public IActionResult Register([FromBody] RegisterRequest req) => Ok(new { message="Registered", email=req.Email, role=req.Role });
-    public record LoginRequest(string Email, string Password);
-    public record RegisterRequest(string Email, string Password, string Role, string FullName);
+    [HttpPost("login")] public IActionResult Login([FromBody] LoginReq r) => Ok(new { token="fake-jwt", email=r.Email, role=r.Email.Contains("admin")?"Admin":"Customer" });
+    [HttpPost("register")] public IActionResult Register([FromBody] RegisterReq r) => Ok(new { message="ok" });
 }
+public record LoginReq(string Email,string Password);
+public record RegisterReq(string Email,string Password,string Role);

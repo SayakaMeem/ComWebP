@@ -1,51 +1,48 @@
-using Core.DTOs;
-using Core.Entities;
+﻿using Core.DTOs;
 using Core.Interfaces;
-using Infrastructure;
-using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Services;
 public class ProductService : IProductService
 {
-    private readonly AppDbContext _db;
-    public ProductService(AppDbContext db) => _db = db;
+    private static List<ProductDto> _fake = new()
+    {
+        new ProductDto(1, "Backpack", "Fjallraven Backpack", 109.95m, 100, "https://picsum.photos/seed/1/400/400", "local", 4.9),
+        new ProductDto(2, "T-Shirt", "Mens Casual T-Shirt", 22.3m, 50, "https://picsum.photos/seed/2/400/400", "local", 4.8),
+        new ProductDto(3, "Jacket", "Mens Cotton Jacket", 55.99m, 30, "https://picsum.photos/seed/3/400/400", "local", 4.7),
+        new ProductDto(4, "Slim Fit", "Mens Casual Slim Fit", 15.99m, 30, "https://picsum.photos/seed/4/400/400", "local", 4.6)
+    };
 
-    public async Task<PaginatedResponse<ProductDto>> GetAllAsync(int page, int pageSize, string search, string category)
+    public Task<PaginatedResponse<ProductDto>> GetAllAsync(int p,int ps,string s,string c)
+        => Task.FromResult(new PaginatedResponse<ProductDto>(_fake, p, ps, _fake.Count));
+
+    public Task<ProductDto?> GetByIdAsync(int id)
+        => Task.FromResult(_fake.FirstOrDefault(x=>x.Id==id));
+
+    public Task<ProductDto> CreateAsync(CreateProductDto dto)
     {
-        var query = _db.Products.AsQueryable();
-        if (!string.IsNullOrEmpty(search))
-            query = query.Where(p => p.Name.Contains(search));
-        var total = await query.CountAsync();
-        var data = await query.Skip((page-1)*pageSize).Take(pageSize)
-           .Select(p => new ProductDto(p.Id, p.Name, p.Description, p.Price, p.Stock, p.ImageUrl, "Local", 4.8)).ToListAsync();
-        return new PaginatedResponse<ProductDto>(data, total, page, pageSize);
+        var id = _fake.Any()? _fake.Max(x=>x.Id)+1 : 1;
+        var image = string.IsNullOrWhiteSpace(dto.ImageUrl)? $"https://picsum.photos/seed/{id}/400/400" : dto.ImageUrl;
+        var prod = new ProductDto(id, dto.Name, dto.Description, dto.Price, dto.Stock, image, "local", 4.9);
+        _fake.Add(prod);
+        return Task.FromResult(prod);
     }
-    public async Task<ProductDto?> GetByIdAsync(int id)
+
+    public Task<bool> UpdateAsync(int id, UpdateProductDto dto)
     {
-        var p = await _db.Products.FindAsync(id);
-        return p == null? null : new ProductDto(p.Id, p.Name, p.Description, p.Price, p.Stock, p.ImageUrl, "Local", 4.8);
+        var index = _fake.FindIndex(x=>x.Id==id);
+        if(index==-1) return Task.FromResult(false);
+        var existing = _fake[index];
+        _fake[index] = existing with
+        {
+            Name = dto.Name,
+            Description = dto.Description,
+            Price = dto.Price,
+            Stock = dto.Stock,
+            ImageUrl = string.IsNullOrWhiteSpace(dto.ImageUrl)? existing.ImageUrl : dto.ImageUrl
+        };
+        return Task.FromResult(true);
     }
-    public async Task<ProductDto> CreateAsync(CreateProductDto dto)
-    {
-        var e = new Product { Name=dto.Name, Description=dto.Description, Price=dto.Price, Stock=dto.Stock, ImageUrl=dto.ImageUrl };
-        _db.Products.Add(e);
-        await _db.SaveChangesAsync();
-        return new ProductDto(e.Id, e.Name, e.Description, e.Price, e.Stock, e.ImageUrl, dto.Category, 4.8);
-    }
-    public async Task<bool> UpdateAsync(int id, UpdateProductDto dto)
-    {
-        var e = await _db.Products.FindAsync(id);
-        if(e==null) return false;
-        e.Name=dto.Name; e.Description=dto.Description; e.Price=dto.Price; e.Stock=dto.Stock; e.ImageUrl=dto.ImageUrl;
-        await _db.SaveChangesAsync();
-        return true;
-    }
-    public async Task<bool> DeleteAsync(int id)
-    {
-        var e = await _db.Products.FindAsync(id);
-        if(e==null) return false;
-        _db.Products.Remove(e);
-        await _db.SaveChangesAsync();
-        return true;
-    }
+
+    public Task<bool> DeleteAsync(int id)
+        => Task.FromResult(_fake.RemoveAll(x=>x.Id==id) > 0);
 }

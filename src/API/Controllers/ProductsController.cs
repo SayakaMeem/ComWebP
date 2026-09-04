@@ -1,53 +1,20 @@
-using Core.Entities;
-using Infrastructure.Data;
+﻿using Core.DTOs;
+using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-
-namespace API.Controllers
+namespace API.Controllers;
+[ApiController, Route("api/[controller]")]
+public class ProductsController : ControllerBase
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ProductsController : ControllerBase
+    private readonly IProductService _s;
+    public ProductsController(IProductService s){_s=s;}
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
     {
-        private readonly AppDbContext _context;
-        public ProductsController(AppDbContext context) => _context = context;
-
-        [HttpGet]
-        public async Task<ActionResult<List<Product>>> GetProducts()
-            => await _context.Products.ToListAsync();
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
-        {
-            var p = await _context.Products.FindAsync(id);
-            return p == null? NotFound() : p;
-        }
-
-        [HttpPost]
-        public async Task<ActionResult<Product>> CreateProduct(Product product)
-        {
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetProduct), new { id = product.Id }, product);
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateProduct(int id, Product product)
-        {
-            if (id!= product.Id) return BadRequest();
-            _context.Entry(product).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProduct(int id)
-        {
-            var p = await _context.Products.FindAsync(id);
-            if (p == null) return NotFound();
-            _context.Products.Remove(p);
-            await _context.SaveChangesAsync();
-            return NoContent();
-        }
+        var paged = await _s.GetAllAsync(1,100,"","");
+        return Ok(paged.Data); // <-- returns plain array, not object
     }
+    [HttpGet("{id}")] public async Task<IActionResult> Get(int id)=> Ok(await _s.GetByIdAsync(id));
+    [HttpPost] public async Task<IActionResult> Create(CreateProductDto dto)=> Ok(await _s.CreateAsync(dto));
+    [HttpPut("{id}")] public async Task<IActionResult> Update(int id, UpdateProductDto dto)=> Ok(await _s.UpdateAsync(id,dto));
+    [HttpDelete("{id}")] public async Task<IActionResult> Delete(int id)=> Ok(await _s.DeleteAsync(id));
 }

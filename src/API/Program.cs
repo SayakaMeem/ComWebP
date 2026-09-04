@@ -1,18 +1,13 @@
-using Microsoft.EntityFrameworkCore;
 
+using Core.Interfaces;
+using Infrastructure.Services;
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddControllers();
-builder.Services.AddOpenApi();
 builder.Services.AddCors(o => o.AddPolicy("AllowAll", p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
-builder.Services.AddDbContext<Infrastructure.Data.AppDbContext>(opt =>
-    opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSingleton<IProductService, ProductService>();
 var app = builder.Build();
-
-app.MapOpenApi();
 app.UseCors("AllowAll");
 app.UseAuthorization();
 app.MapControllers();
-
 app.Run();
