@@ -1,10 +1,7 @@
-bin/
-obj/
-.vs/
-out/
-node_modules/
-client/node_modules/
-client/dist/
-dist/
+node_modules
+dist
+build
+.vercel
 .env
 .env.local
+.DS_Store

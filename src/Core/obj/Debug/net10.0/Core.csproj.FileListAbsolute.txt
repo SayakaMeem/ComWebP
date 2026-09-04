@@ -1,0 +1,12 @@
+D:\GitProjects\ComWebP\src\Core\bin\Debug\net10.0\Core.deps.json
+D:\GitProjects\ComWebP\src\Core\bin\Debug\net10.0\Core.dll
+D:\GitProjects\ComWebP\src\Core\bin\Debug\net10.0\Core.pdb
+D:\GitProjects\ComWebP\src\Core\obj\Debug\net10.0\Core.GeneratedMSBuildEditorConfig.editorconfig
+D:\GitProjects\ComWebP\src\Core\obj\Debug\net10.0\Core.AssemblyInfoInputs.cache
+D:\GitProjects\ComWebP\src\Core\obj\Debug\net10.0\Core.AssemblyInfo.cs
+D:\GitProjects\ComWebP\src\Core\obj\Debug\net10.0\Core.csproj.CoreCompileInputs.cache
+D:\GitProjects\ComWebP\src\Core\obj\Debug\net10.0\Core.dll
+D:\GitProjects\ComWebP\src\Core\obj\Debug\net10.0\refint\Core.dll
+D:\GitProjects\ComWebP\src\Core\obj\Debug\net10.0\Core.pdb
+D:\GitProjects\ComWebP\src\Core\obj\Debug\net10.0\ref\Core.dll
+D:\GitProjects\ComWebP\src\Core\obj\Debug\net10.0\Core.sourcelink.json
