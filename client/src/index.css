@@ -27,3 +27,12 @@ html[data-theme="dark"]{ --text:#9ca3af; --text-h:#f3f4f6; --bg:#16171d; --borde
 .overlay{position:fixed; inset:0; background:rgba(0,0,0,0.3); z-index:150}
 .hide-mobile{display:flex}
 @media(max-width:768px){.search{order:3; flex-basis:100%}.grid{grid-template-columns:repeat(2,1fr); gap:10px}.card img{height:120px}.hero{grid-template-columns:1fr}.hero h1{font-size:32px}.contact-section{grid-template-columns:1fr}.hide-mobile{display:none} }
+
+/* Payment Integration - For Acme AI */
+.payment-tabs{display:flex; gap:8px; margin:12px 0}
+.payment-tab{flex:1; padding:10px; border-radius:999px; border:1px solid var(--border); background:var(--social-bg); font-weight:700; cursor:pointer; font-size:13px}
+.payment-tab.stripe-active{background:#0ea5e9; color:white; border-color:#0ea5e9}
+.payment-tab.ssl-active{background:#10b981; color:white; border-color:#10b981}
+.payment-box{background:#e0f2fe; border:1px solid #0ea5e9; border-radius:10px; padding:12px; font-size:12px; margin-bottom:10px}
+.payment-box.ssl{background:#d1fae5; border-color:#10b981}
+.payment-input{width:100%; padding:11px; border-radius:10px; border:1px solid var(--border); background:var(--bg); color:var(--text-h); margin:6px 0; outline:none}
